@@ -12,3 +12,8 @@ export const unauthorized = (message: string) => ({
   statusCode: 401,
   message: { message },
 });
+
+export const notFound = (message: string) => ({
+  statusCode: 404,
+  message: { message },
+});

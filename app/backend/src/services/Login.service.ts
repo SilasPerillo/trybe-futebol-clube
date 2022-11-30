@@ -2,7 +2,7 @@ import ValidatePassword from '../utils/validatePassword';
 import Users from '../database/models/Users';
 // import { IResponse } from '../interfaces/utils.interface';
 import { ILogin } from '../interfaces/user.interface';
-import { badRequest, ok, unauthorized } from '../utils/httpHelpers';
+import { badRequest, notFound, ok, unauthorized } from '../utils/httpHelpers';
 import Token from '../utils/jwtToken';
 
 export default class LoginService {
@@ -22,5 +22,19 @@ export default class LoginService {
     const token = Token.createToken(email);
 
     return ok({ token });
+  }
+
+  static async validateUser(authorization: string) {
+    if (!authorization) return unauthorized('Token is required');
+
+    const { email } = Token.validateToken(authorization);
+    if (!email) return unauthorized('Invalid token');
+
+    const result = await Users.findOne({ where: { email } });
+
+    if (!result) {
+      return notFound('User not found');
+    }
+    return ok({ role: result.role });
   }
 }

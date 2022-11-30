@@ -88,10 +88,19 @@ describe('Teste para rota login', () => {
     chaiHttpResponse = await chai
       .request(app)
       .post('/login')
-      .send({email: "valid@admin.com", password: "invalid"});
+      .send({email: "valid@admin.com", password: "valid"});
 
     expect(chaiHttpResponse.status).to.be.eq(200);
-    expect(chaiHttpResponse.body.message).to.deep.eq({token: 'token'});
+    expect(chaiHttpResponse.body).to.be.deep.eq({token: 'token'});
+  })
 
+  it('Verifica sem token na rota /login/validate', async () => {
+    chaiHttpResponse = await chai
+      .request(app)
+      .get('/login/validate')
+      .send();
+
+      expect(chaiHttpResponse.status).to.be.eq(401);
+      expect(chaiHttpResponse.body.message).to.be.deep.eq('Token is required');
   })
 });
