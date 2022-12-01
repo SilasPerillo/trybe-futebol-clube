@@ -31,10 +31,10 @@ module.exports = {
           key: 'id',
         }
       },
-      awayTeamsGoals: {
+      awayTeamGoals: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        field: 'away_teams_goals',
+        field: 'away_team_goals',
       },
       inProgress: {
         type: Sequelize.BOOLEAN,
