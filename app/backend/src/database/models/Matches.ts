@@ -31,10 +31,10 @@ Matches.init({
     allowNull: false,
     field: 'away_team',
   },
-  awayTeamsGoals: {
+  awayTeamGoals: {
     type: INTEGER,
     allowNull: false,
-    field: 'away_teams_goals',
+    field: 'away_team_goals',
   },
   inProgress: {
     type: BOOLEAN,
