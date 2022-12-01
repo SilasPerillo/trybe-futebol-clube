@@ -2,7 +2,14 @@ import { Request, Response } from 'express';
 import { MatchesService } from '../services';
 
 class MatchesController {
-  static async findAll(_req: Request, res: Response) {
+  static async findMatches(req: Request, res: Response) {
+    const { inProgress } = req.query;
+
+    if (inProgress) {
+      const { statusCode, message } = await MatchesService.getMatchesProgress(inProgress as string);
+      return res.status(statusCode).json(message);
+    }
+
     const { statusCode, message } = await MatchesService.findAll();
 
     return res.status(statusCode).json(message);

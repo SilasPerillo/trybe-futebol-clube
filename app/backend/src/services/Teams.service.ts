@@ -11,7 +11,6 @@ export default class TeamsService {
   static async findById(teamId: string) {
     const id = Number(teamId);
     const result = await Teams.findByPk(id);
-    console.log('result', result);
 
     if (!result) return notFound('Id not found');
 

@@ -13,4 +13,14 @@ export default class MatchesService {
 
     return ok(result);
   }
+
+  static async getMatchesProgress(inProgress: string) {
+    const value = inProgress === 'true' ? '1' : '0';
+    const result = await Matches.findAll({
+      where: { inProgress: value },
+      include: { all: true },
+    });
+
+    return ok(result);
+  }
 }

@@ -34,6 +34,7 @@ export default class LoginService {
     if (!result) {
       return notFound('User not found');
     }
-    return ok({ role: result.role });
+
+    return ok({ role: result.dataValues.role });
   }
 }
