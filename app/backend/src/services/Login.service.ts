@@ -1,6 +1,5 @@
 import ValidatePassword from '../utils/validatePassword';
 import Users from '../database/models/Users';
-// import { IResponse } from '../interfaces/utils.interface';
 import { ILogin } from '../interfaces/user.interface';
 import { badRequest, notFound, ok, unauthorized } from '../utils/httpHelpers';
 import Token from '../utils/jwtToken';

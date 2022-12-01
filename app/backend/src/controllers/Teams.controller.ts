@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
+import { TeamsService } from '../services';
 
 class TeamsController {
   static async findAll(req: Request, res: Response) {
-    const { body } = req;
-    // const { statusCode, message } = await LoginService.loginUser(body);
+    const { statusCode, message } = await TeamsService.findAll();
 
-    return res.status(200).json(body);
+    return res.status(statusCode).json(message);
   }
 }
 
