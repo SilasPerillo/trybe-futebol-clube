@@ -14,6 +14,14 @@ class MatchesController {
 
     return res.status(statusCode).json(message);
   }
+
+  static async insertMatches(req: Request, res: Response) {
+    const { body } = req;
+
+    const { statusCode, message } = await MatchesService.insertMatches(body);
+
+    return res.status(statusCode).json(message);
+  }
 }
 
 export default MatchesController;

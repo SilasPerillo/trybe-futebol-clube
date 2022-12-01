@@ -1,6 +1,7 @@
-import { ok } from '../utils/httpHelpers';
+import { created, ok } from '../utils/httpHelpers';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
+import { IMatch } from '../interfaces/matches.interface';
 
 export default class MatchesService {
   static async findAll() {
@@ -22,5 +23,18 @@ export default class MatchesService {
     });
 
     return ok(result);
+  }
+
+  static async insertMatches(body: IMatch) {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = body;
+    const result = await Matches.create({
+      homeTeam,
+      homeTeamGoals,
+      awayTeam,
+      awayTeamGoals,
+      inProgress: true,
+    });
+
+    return created(result);
   }
 }
