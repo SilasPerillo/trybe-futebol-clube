@@ -10,7 +10,7 @@ class TeamsController {
 
   static async findById(req: Request, res: Response) {
     const { id } = req.params;
-    const { statusCode, message } = await TeamsService.findById(id);
+    const { statusCode, message } = await TeamsService.findById(Number(id));
 
     return res.status(statusCode).json(message);
   }

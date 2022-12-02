@@ -8,11 +8,10 @@ export default class TeamsService {
     return ok(result);
   }
 
-  static async findById(teamId: string) {
-    const id = Number(teamId);
+  static async findById(id: number) {
     const result = await Teams.findByPk(id);
 
-    if (!result) return notFound('Id not found');
+    if (!result) return notFound('There is no team with such id!');
 
     return ok(result);
   }

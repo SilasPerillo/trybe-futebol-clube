@@ -1,7 +1,8 @@
-import { created, ok, unprocessableEntity } from '../utils/httpHelpers';
+import { created, notFound, ok, unprocessableEntity } from '../utils/httpHelpers';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 import { IMatch } from '../interfaces/matches.interface';
+import TeamsService from './Teams.service';
 
 export default class MatchesService {
   static async findAll() {
@@ -27,6 +28,13 @@ export default class MatchesService {
 
   static async insertMatches(body: IMatch) {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = body;
+
+    const checkHomeTeam = await TeamsService.findById(homeTeam);
+    const checkAwayTeam = await TeamsService.findById(awayTeam);
+
+    if (checkHomeTeam.statusCode === 404 || checkAwayTeam.statusCode === 404) {
+      return notFound('There is no team with such id!');
+    }
 
     if (homeTeam === awayTeam) {
       return unprocessableEntity('It is not possible to create a match with two equal teams');
