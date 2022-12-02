@@ -1,4 +1,4 @@
-import { created, ok } from '../utils/httpHelpers';
+import { created, ok, unprocessableEntity } from '../utils/httpHelpers';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 import { IMatch } from '../interfaces/matches.interface';
@@ -27,6 +27,11 @@ export default class MatchesService {
 
   static async insertMatches(body: IMatch) {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = body;
+
+    if (homeTeam === awayTeam) {
+      return unprocessableEntity('It is not possible to create a match with two equal teams');
+    }
+
     const result = await Matches.create({
       homeTeam,
       homeTeamGoals,
