@@ -41,6 +41,15 @@ class MatchesController {
 
     return res.status(statusCode).json(message);
   }
+
+  static async updateMatchGoals(req: Request, res: Response) {
+    const { body } = req;
+    const { id } = req.params;
+
+    const { statusCode, message } = await MatchesService.updateMatchGoals(body, Number(id));
+
+    return res.status(statusCode).json(message);
+  }
 }
 
 export default MatchesController;

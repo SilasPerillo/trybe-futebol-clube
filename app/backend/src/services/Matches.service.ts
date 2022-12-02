@@ -1,7 +1,7 @@
 import { created, notFound, ok, unprocessableEntity } from '../utils/httpHelpers';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
-import { IMatch } from '../interfaces/matches.interface';
+import { IGoals, IMatch } from '../interfaces/matches.interface';
 import TeamsService from './Teams.service';
 
 export default class MatchesService {
@@ -56,5 +56,19 @@ export default class MatchesService {
     await Matches.update({ inProgress: false }, { where: { id } });
 
     return ok({ message: 'Finished' });
+  }
+
+  static async updateMatchGoals(body: IGoals, id: number) {
+    const { homeTeamGoals, awayTeamGoals } = body;
+    await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+
+    const match = await Matches.findByPk(id, {
+      include: [
+        { model: Teams, as: 'teamHome' },
+        { model: Teams, as: 'teamAway' },
+      ],
+    });
+
+    return ok(match);
   }
 }
