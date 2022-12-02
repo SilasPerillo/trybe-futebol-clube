@@ -150,7 +150,6 @@ const AllMatchesFinished = [
       "teamName": "Grêmio"
     }
   },
-  ,
   {
     "id": 2,
 

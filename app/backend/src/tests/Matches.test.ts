@@ -3,7 +3,7 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { Response } from 'superagent'
-import { AllMatches, AllMatchesInProgress } from './mock/Matches.mock'
+import { AllMatches, AllMatchesInProgress, AllMatchesFinished } from './mock/Matches.mock'
 
 import App from '../app';
 import Matches from '../database/models/Matches';
@@ -34,7 +34,7 @@ describe('Teste para rota de partidas', () => {
     expect(chaiHttpResponse.body).to.be.deep.eq(AllMatches);
   })
 
-  it('Verifica retorno 200 no caso de sucesso na rota /matches?inProgress', async () => {
+  it('Verifica retorno 200 no caso de sucesso na rota /matches?inProgress nas partidas em andamento ', async () => {
     sinon
     .stub(Matches, 'findAll')
     .resolves(AllMatchesInProgress as any);
@@ -47,4 +47,16 @@ describe('Teste para rota de partidas', () => {
     expect(chaiHttpResponse.body).to.be.deep.eq(AllMatchesInProgress);
   })
 
+  it('Verifica retorno 200 no caso de sucesso na rota /matches?inProgress nas partidas finalizadas', async () => {
+    sinon
+    .stub(Matches, 'findAll')
+    .resolves(AllMatchesFinished as any);
+
+    chaiHttpResponse = await chai
+      .request(app)
+      .get('/matches?inProgress=false');
+
+    expect(chaiHttpResponse.status).to.be.eq(200);
+    expect(chaiHttpResponse.body).to.be.deep.eq(AllMatchesFinished);
+  })
 })
