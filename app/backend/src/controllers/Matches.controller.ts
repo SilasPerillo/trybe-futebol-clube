@@ -22,6 +22,14 @@ class MatchesController {
 
     return res.status(statusCode).json(message);
   }
+
+  static async updateMatchesStatus(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const { statusCode, message } = await MatchesService.updateMatchesStatus(id);
+
+    return res.status(statusCode).json(message);
+  }
 }
 
 export default MatchesController;

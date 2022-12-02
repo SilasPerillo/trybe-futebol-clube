@@ -37,4 +37,11 @@ export default class MatchesService {
 
     return created(result);
   }
+
+  static async updateMatchesStatus(idMatch: string) {
+    const id = Number(idMatch);
+    await Matches.update({ inProgress: false }, { where: { id } });
+
+    return ok({ message: 'Finished' });
+  }
 }
