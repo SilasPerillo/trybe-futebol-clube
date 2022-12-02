@@ -33,4 +33,18 @@ describe('Teste para rota de times', () => {
     expect(chaiHttpResponse.status).to.be.eq(200);
     expect(chaiHttpResponse.body).to.be.deep.eq(AllTeams);
   })
+
+  it('Verifica retorno 404 no caso de não encontrar o time', async () => {
+    sinon
+    .stub(Teams, 'findByPk')
+    .resolves(null);
+
+    chaiHttpResponse = await chai
+      .request(app)
+      .get('/teams/1');
+
+    expect(chaiHttpResponse.status).to.be.eq(404);
+    expect(chaiHttpResponse.body).to.be.deep.eq({ message: 'There is no team with such id!' });
+  }
+  )
 })
