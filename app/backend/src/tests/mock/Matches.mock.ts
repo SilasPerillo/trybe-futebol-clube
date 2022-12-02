@@ -185,4 +185,13 @@ const AllMatchesFinished = [
   }
 ];
 
-export { AllMatches, AllMatchesInProgress, AllMatchesFinished };
+const teamsNotFounds = {
+  checkHomeTeam: {
+    statusCode: 404,
+  },
+  checkAwayTeam: {
+    statusCode: 404,
+  }
+}
+
+export { AllMatches, AllMatchesInProgress, AllMatchesFinished, teamsNotFounds };
