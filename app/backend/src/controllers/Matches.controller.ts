@@ -24,7 +24,7 @@ class MatchesController {
     const validateToken = Token.validateToken(authorization as string);
 
     if (validateToken.message) {
-      const { statusCode, message } = unauthorized('Invalid token');
+      const { statusCode, message } = unauthorized('Token must be a valid token');
 
       return res.status(statusCode).json(message);
     }
