@@ -3,7 +3,7 @@ import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 import { Response } from 'superagent'
-import { AllTeams } from './mock/Teams.mock'
+import { AllTeams, OneTeam } from './mock/Teams.mock'
 
 import App from '../app';
 import Teams from '../database/models/Teams';
@@ -45,6 +45,18 @@ describe('Teste para rota de times', () => {
 
     expect(chaiHttpResponse.status).to.be.eq(404);
     expect(chaiHttpResponse.body).to.be.deep.eq({ message: 'There is no team with such id!' });
-  }
-  )
+  })
+
+  it('Verifica retorno 200 no caso de sucesso', async () => {
+    sinon
+    .stub(Teams, 'findByPk')
+    .resolves(OneTeam as Teams);
+
+    chaiHttpResponse = await chai
+      .request(app)
+      .get('/teams/1');
+
+    expect(chaiHttpResponse.status).to.be.eq(200);
+    expect(chaiHttpResponse.body).to.be.deep.eq(OneTeam);
+  })
 })
