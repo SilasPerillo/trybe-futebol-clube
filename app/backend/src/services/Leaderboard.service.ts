@@ -1,11 +1,12 @@
 import { ok } from '../utils/httpHelpers';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
+import { ILeaderboard, IObjMatchInfo } from '../interfaces/leaderboard.interface';
 
 export default class MatchesService {
-  private static arrayAllTeams: any[] = [];
+  private static arrayAllTeams: ILeaderboard[] = [];
 
-  static allocatePoints(matchInfo: any, winner: string) {
+  static allocatePoints(matchInfo: IObjMatchInfo, winner: string) {
     const result = winner === 'home'
       ? matchInfo.homeTeamGoals - matchInfo.awayTeamGoals
       : matchInfo.awayTeamGoals - matchInfo.homeTeamGoals;
@@ -23,7 +24,7 @@ export default class MatchesService {
   }
 
   static async insertDataHome(winner: string) {
-    const matches = await Matches.findAll({ where: { inProgress: false } }) as any[];
+    const matches = await Matches.findAll({ where: { inProgress: false } }) as Matches[];
     const teams = await Teams.findAll();
     const result = teams.map((team) => MatchesService.constructorTableTeam(team));
     MatchesService.arrayAllTeams = result;
